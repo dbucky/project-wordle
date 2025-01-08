@@ -174,6 +174,9 @@ h1 {
   animation: slideUp 750ms cubic-bezier(0, 0.72, 0.24, 1.02);
   border-radius: 4px 4px 0px 0px;
   will-change: transform;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .happy.banner {
@@ -183,6 +186,13 @@ h1 {
 .sad.banner {
   background: var(--color-error);
   color: white;
+}
+
+.banner button {
+  padding: 4px 8px;
+  border: 1px solid #fff;
+  border-radius: 4px;
+  font-size: 14px;
 }
 
 .visually-hidden {
