@@ -1,11 +1,25 @@
+import { range } from './utils';
+import { NUM_OF_LETTERS_ALLOWED } from './constants';
+
 export function checkGuess(guess, answer) {
-  if (!guess) {
-    return null;
+  // console.log({ checkGuess: guess });
+
+  if (
+    !guess ||
+    guess.status === 'editing' ||
+    guess.value.length < NUM_OF_LETTERS_ALLOWED
+  ) {
+    return range(NUM_OF_LETTERS_ALLOWED).map((index) => {
+      if (guess?.value.length > index) {
+        return { letter: guess.value[index], status: undefined };
+      }
+
+      return { letter: undefined, status: undefined };
+    });
   }
 
-  const guessChars = guess.toUpperCase().split('');
+  const guessChars = guess.value.split('');
   const answerChars = answer.split('');
-
   const result = [];
 
   for (let i = 0; i < guessChars.length; i++) {

@@ -1,16 +1,20 @@
 import React from 'react';
-import { range } from '../../utils';
-import { NUM_OF_LETTERS_ALLOWED } from '../../constants';
+import { checkGuess } from '../../game-helpers';
+
+import { AnswerContext } from '../Game';
 
 function Guess({ guess }) {
-  if (!guess) {
-    guess = range(NUM_OF_LETTERS_ALLOWED).map((index) => {
-      return { letter: undefined, status: undefined };
-    });
-  }
+  const answer = React.useContext(AnswerContext);
+
+  // console.log({ guess });
+
+  const checkedGuess = checkGuess(guess, answer);
+
+  // console.log({ guess, checkedGuess });
+
   return (
     <p className="guess">
-      {guess.map(({ letter, status }, index) => {
+      {checkedGuess.map(({ letter, status }, index) => {
         return (
           <span key={index} className={status ? `cell ${status}` : 'cell'}>
             {letter}

@@ -1,15 +1,18 @@
 import Game from '../Game';
 import Header from '../Header';
 
+import KeyboardProvider from '../KeyboardProvider';
+
 function App() {
   return (
-    <div className="wrapper">
-      <Header />
-
-      <div className="game-wrapper">
-        <Game />
+    <KeyboardProvider>
+      <div className="wrapper">
+        <Header />
+        <div className="game-wrapper">
+          <Game />
+        </div>
       </div>
-    </div>
+    </KeyboardProvider>
   );
 }
 
