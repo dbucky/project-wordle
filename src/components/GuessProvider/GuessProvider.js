@@ -77,20 +77,30 @@ function GuessProvider({ children }) {
   }
 
   function checkGuess(guess) {
-    const answerLetters = answer.split('');
+    const answerLetters = answer.split('').map((letter) => {
+      return { value: letter, processed: false };
+    });
 
     for (let i = 0; i < NUM_OF_LETTERS_ALLOWED; i++) {
-      if (guess.letters[i].value === answerLetters[i]) {
+      if (guess.letters[i].value === answerLetters[i].value) {
         guess.letters[i].status = 'correct';
+        answerLetters[i].processed = true;
+      }
+    }
+
+    for (let i = 0; i < NUM_OF_LETTERS_ALLOWED; i++) {
+      if (guess.letters[i].status === 'correct') {
+        continue;
+      }
+
+      const misplacedLetter = answerLetters.find(
+        (letter) => !letter.processed && letter.value === guess.letters[i].value
+      );
+      if (misplacedLetter) {
+        guess.letters[i].status = 'misplaced';
+        misplacedLetter.processed = true;
       } else {
-        const misplacedIndex = answerLetters.findIndex(
-          (char) => char === guess.letters[i].value
-        );
-        if (misplacedIndex >= 0) {
-          guess.letters[i].status = 'misplaced';
-        } else {
-          guess.letters[i].status = 'incorrect';
-        }
+        guess.letters[i].status = 'incorrect';
       }
     }
 
