@@ -21,6 +21,10 @@ function Game() {
 
   function handleKey(key) {
     // console.log({ key });
+    if (gameState !== 'in-progress') {
+      return;
+    }
+
     switch (key) {
       case 'ENTER':
         if (confirmGuess()) {

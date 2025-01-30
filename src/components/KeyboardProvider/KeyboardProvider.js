@@ -42,7 +42,7 @@ function KeyboardProvider({ children }) {
   );
 
   function updateKeyboardState(guess) {
-    console.log('updateKeyboardState', guess);
+    // console.log('updateKeyboardState', guess);
 
     let changed = false;
     const nextKeys = [...keys];
