@@ -22,13 +22,30 @@ function VisualKeyboard({ handleKey }) {
       }
     }
 
+    function handleKeydown(event) {
+      const key = event.key.toUpperCase();
+
+      switch (key) {
+        case 'BACKSPACE':
+        case 'ENTER':
+          handleKey(key);
+          break;
+        default:
+          if (/^[A-Z]$/.test(key)) {
+            handleKey(key);
+          }
+      }
+    }
+
     window.addEventListener('click', handleClick);
+    window.addEventListener('keydown', handleKeydown);
 
     return () => {
       window.removeEventListener('click', handleClick);
+      window.removeEventListener('keydown', handleKeydown);
     };
   }, [handleKey]);
-  // console.log('VisualKeyboard', keys);
+
   function renderKeys(keys) {
     return (
       <div className="row">
