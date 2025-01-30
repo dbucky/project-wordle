@@ -1,18 +1,24 @@
+import AnswerProvider from '../AnswerProvider';
+import GuessProvider from '../GuessProvider';
+import KeyboardProvider from '../KeyboardProvider';
+
 import Game from '../Game';
 import Header from '../Header';
 
-import KeyboardProvider from '../KeyboardProvider';
-
 function App() {
   return (
-    <KeyboardProvider>
-      <div className="wrapper">
-        <Header />
-        <div className="game-wrapper">
-          <Game />
-        </div>
-      </div>
-    </KeyboardProvider>
+    <AnswerProvider>
+      <GuessProvider>
+        <KeyboardProvider>
+          <div className="wrapper">
+            <Header />
+            <div className="game-wrapper">
+              <Game />
+            </div>
+          </div>
+        </KeyboardProvider>
+      </GuessProvider>
+    </AnswerProvider>
   );
 }
 

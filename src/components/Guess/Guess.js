@@ -1,23 +1,16 @@
 import React from 'react';
-import { checkGuess } from '../../game-helpers';
 
-import { AnswerContext } from '../Game';
+import { GuessContext } from '../GuessProvider';
 
 function Guess({ guess }) {
-  const answer = React.useContext(AnswerContext);
-
-  // console.log({ guess });
-
-  const checkedGuess = checkGuess(guess, answer);
-
-  // console.log({ guess, checkedGuess });
+  const { blankGuess } = React.useContext(GuessContext);
 
   return (
     <p className="guess">
-      {checkedGuess.map(({ letter, status }, index) => {
+      {(guess || blankGuess).letters.map(({ value, status }, index) => {
         return (
           <span key={index} className={status ? `cell ${status}` : 'cell'}>
-            {letter}
+            {value}
           </span>
         );
       })}

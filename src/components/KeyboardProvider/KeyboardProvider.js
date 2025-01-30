@@ -2,6 +2,8 @@ import React from 'react';
 
 export const KeyboardContext = React.createContext();
 
+const letterStatusPriority = ['unused', 'incorrect', 'misplaced', 'correct'];
+
 function KeyboardProvider({ children }) {
   const [keys, setKeys] = React.useState(
     [
@@ -34,17 +36,48 @@ function KeyboardProvider({ children }) {
       { value: 'M' },
       { value: 'BACKSPACE' },
     ].map((key) => {
-      key.state = 'unused';
+      key.status = 'unused';
       return key;
     })
   );
 
-  function updateKeyboardState(guesses) {
-    console.log({ guesses });
+  function updateKeyboardState(guess) {
+    console.log('updateKeyboardState', guess);
+
+    let changed = false;
+    const nextKeys = [...keys];
+
+    guess.letters.forEach(({ value, status }) => {
+      const key = nextKeys.find((x) => x.value === value);
+
+      if (
+        letterStatusPriority.indexOf(status) >
+        letterStatusPriority.indexOf(key.status)
+      ) {
+        key.status = status;
+        changed = true;
+      }
+    });
+
+    if (changed) {
+      setKeys(nextKeys);
+    }
+  }
+
+  function resetKeyboardState() {
+    const nextKeys = [...keys];
+    setKeys(
+      nextKeys.map((key) => {
+        key.status = 'unused';
+        return key;
+      })
+    );
   }
 
   return (
-    <KeyboardContext.Provider value={{ keys, updateKeyboardState }}>
+    <KeyboardContext.Provider
+      value={{ keys, updateKeyboardState, resetKeyboardState }}
+    >
       {children}
     </KeyboardContext.Provider>
   );

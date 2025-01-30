@@ -2,16 +2,17 @@ import React from 'react';
 import { KeyboardContext } from '../KeyboardProvider/KeyboardProvider';
 import { Delete } from 'react-feather';
 
+const customizations = {
+  BACKSPACE: {
+    wide: true,
+    icon: Delete,
+  },
+  ENTER: {
+    wide: true,
+  },
+};
+
 function VisualKeyboard({ handleKey }) {
-  const customizations = {
-    BACKSPACE: {
-      wide: true,
-      icon: Delete,
-    },
-    ENTER: {
-      wide: true,
-    },
-  };
   const { keys } = React.useContext(KeyboardContext);
 
   React.useEffect(() => {
@@ -27,7 +28,7 @@ function VisualKeyboard({ handleKey }) {
       window.removeEventListener('click', handleClick);
     };
   }, [handleKey]);
-
+  // console.log('VisualKeyboard', keys);
   function renderKeys(keys) {
     return (
       <div className="row">
@@ -36,7 +37,7 @@ function VisualKeyboard({ handleKey }) {
           return (
             <button
               key={key.value}
-              className={`key ${key.state}`}
+              className={`key ${key.status}`}
               style={{
                 width: customizations[key.value]?.wide ? '16%' : undefined,
               }}

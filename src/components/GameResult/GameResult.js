@@ -1,6 +1,12 @@
 import React from 'react';
 
-function GameResult({ gameState, answer, guessCount, resetGame }) {
+import { AnswerContext } from '../AnswerProvider';
+import { GuessContext } from '../GuessProvider';
+
+function GameResult({ gameState, resetGame }) {
+  const { answer } = React.useContext(AnswerContext);
+  const { guesses } = React.useContext(GuessContext);
+
   if (gameState === 'in-progress') {
     return;
   }
@@ -9,7 +15,7 @@ function GameResult({ gameState, answer, guessCount, resetGame }) {
     <div className="happy banner">
       <p>
         <strong>Congratulations!</strong> Got it in{' '}
-        <strong>{guessCount} guesses</strong>.
+        <strong>{guesses.length} guesses</strong>.
       </p>
       <button onClick={resetGame}>Play Again!</button>
     </div>
